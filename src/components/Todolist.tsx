@@ -1,5 +1,5 @@
 import React from "react";
-import {TasksType} from "../App";
+import {FilterValueType, TasksType} from "../App";
 import {Task} from "./Task";
 import {Button} from "./Button";
 
@@ -7,8 +7,9 @@ type TodolistPropsType = {
     title: string
     tasks: TasksType[]
     removeTask: (id: number) => void
+    changeFilter: (filter: FilterValueType) => void
 };
-export const Todolist = ({title, tasks, removeTask}: TodolistPropsType) => {
+export const Todolist = ({title, tasks, removeTask, changeFilter}: TodolistPropsType) => {
 
     const mappedTasks = tasks.length ?
         tasks.map(task => {
@@ -25,9 +26,9 @@ export const Todolist = ({title, tasks, removeTask}: TodolistPropsType) => {
             </div>
             {mappedTasks}
             <div>
-                <Button title={"All"}/>
-                <Button title={"Active"}/>
-                <Button title={"Complete"}/>
+                <Button title={"All"} onClick={() => changeFilter("All")}/>
+                <Button title={"Active"} onClick={() => changeFilter("Active")}/>
+                <Button title={"Complete"} onClick={() => changeFilter("Completed")}/>
             </div>
         </div>
     );
