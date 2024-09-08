@@ -1,4 +1,4 @@
-import React, {useRef} from "react";
+import React, {ChangeEvent, useRef, useState} from "react";
 import {FilterValueType, TasksType} from "../App";
 import {Task} from "./Task";
 import {Button} from "./Button";
@@ -12,25 +12,35 @@ type TodolistPropsType = {
 };
 export const Todolist = ({title, tasks, removeTask, addTask, changeFilter}: TodolistPropsType) => {
 
-    const inputRef = useRef<HTMLInputElement | null>(null)
+    // const inputRef = useRef<HTMLInputElement | null>(null)
+    const [taskTitle, setTaskTitle] = useState("")
 
     const mappedTasks = tasks.length ?
         tasks.map(task => {
             return <Task key={task.id} removeTask={removeTask} {...task}/>
         }) : <div>No tasks</div>
 
+    // const addTaskHandler = () => {
+    //     if (inputRef.current) {
+    //         addTask(inputRef.current.value)
+    //         inputRef.current.value = ""
+    //     }
+    // }
+
     const addTaskHandler = () => {
-        if (inputRef.current) {
-            addTask(inputRef.current.value)
-            inputRef.current.value = ""
-        }
+        addTask(taskTitle)
+        setTaskTitle("")
+    }
+
+    const addNewTitleHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        setTaskTitle(e.currentTarget.value)
     }
 
     return (
         <div>
             <h3>{title}</h3>
             <div>
-                <input ref={inputRef}/>
+                <input value={taskTitle} onChange={addNewTitleHandler}/>
                 <Button
                     title={"+"}
                     onClick={addTaskHandler}
