@@ -2,6 +2,7 @@ import React, {ChangeEvent, useRef, useState} from "react";
 import {FilterValueType, TasksType} from "../App";
 import {Task} from "./Task";
 import {Button} from "./Button";
+import {log} from "util";
 
 type TodolistPropsType = {
     title: string
@@ -40,7 +41,13 @@ export const Todolist = ({title, tasks, removeTask, addTask, changeFilter}: Todo
         <div>
             <h3>{title}</h3>
             <div>
-                <input value={taskTitle} onChange={addNewTitleHandler}/>
+                <input
+                    value={taskTitle}
+                    onChange={addNewTitleHandler}
+                    onKeyUp={e => {
+                        if (e.key === "Enter")
+                            addTaskHandler()
+                    }}/>
                 <Button
                     title={"+"}
                     onClick={addTaskHandler}
