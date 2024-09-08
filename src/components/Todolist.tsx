@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useRef, useState} from "react";
+import React, {ChangeEvent, KeyboardEvent, useRef, useState} from "react";
 import {FilterValueType, TasksType} from "../App";
 import {Task} from "./Task";
 import {Button} from "./Button";
@@ -37,6 +37,11 @@ export const Todolist = ({title, tasks, removeTask, addTask, changeFilter}: Todo
         setTaskTitle(e.currentTarget.value)
     }
 
+    const addTaskOnKeyUpHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === "Enter")
+            addTaskHandler()
+    }
+
     return (
         <div>
             <h3>{title}</h3>
@@ -44,10 +49,7 @@ export const Todolist = ({title, tasks, removeTask, addTask, changeFilter}: Todo
                 <input
                     value={taskTitle}
                     onChange={addNewTitleHandler}
-                    onKeyUp={e => {
-                        if (e.key === "Enter")
-                            addTaskHandler()
-                    }}/>
+                    onKeyUp={addTaskOnKeyUpHandler}/>
                 <Button
                     title={"+"}
                     onClick={addTaskHandler}
