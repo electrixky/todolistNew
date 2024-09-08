@@ -3,7 +3,7 @@ import {TasksType} from "../App";
 import {Button} from "./Button";
 
 type TaskPropsType = TasksType & {
-    removeTask: (id: number) => void
+    removeTask: (id: string) => void
 }
 export const Task = ({id, title, isDone, removeTask}: TaskPropsType) => {
     // const onClickHandler = (id: number) => removeTask(id)
