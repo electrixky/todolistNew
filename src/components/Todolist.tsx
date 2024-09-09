@@ -30,8 +30,10 @@ export const Todolist = ({title, tasks, removeTask, addTask, changeFilter, chang
     // }
 
     const addTaskHandler = () => {
-        addTask(taskTitle)
-        setTaskTitle("")
+        if(taskTitle.trim()) {
+            addTask(taskTitle.trim())
+            setTaskTitle("")
+        }
     }
 
     const addNewTitleHandler = (e: ChangeEvent<HTMLInputElement>) => {
