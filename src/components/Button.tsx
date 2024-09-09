@@ -1,7 +1,10 @@
 import {ButtonHTMLAttributes} from "react";
 
-export const Button = ({title, onClick}: ButtonHTMLAttributes<HTMLButtonElement>) => {
+export const Button = ({title, onClick, className}: ButtonHTMLAttributes<HTMLButtonElement>) => {
     return (
-        <button onClick={onClick}>{title}</button>
+        <button
+            onClick={onClick}
+            className={className}
+        >{title}</button>
     );
 };

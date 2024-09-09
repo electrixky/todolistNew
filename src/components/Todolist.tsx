@@ -2,7 +2,7 @@ import React, {ChangeEvent, KeyboardEvent, useRef, useState} from "react";
 import {FilterValueType, TasksType} from "../App";
 import {Task} from "./Task";
 import {Button} from "./Button";
-import {log} from "util";
+import s from "./todolist.module.css"
 
 type TodolistPropsType = {
     title: string
@@ -11,11 +11,21 @@ type TodolistPropsType = {
     addTask: (newTitle: string) => void
     changeFilter: (filter: FilterValueType) => void
     changeTaskStatus: (id: string, newStatus: boolean) => void
+    filter: FilterValueType
 };
-export const Todolist = ({title, tasks, removeTask, addTask, changeFilter, changeTaskStatus}: TodolistPropsType) => {
+export const Todolist = ({
+                             title,
+                             tasks,
+                             removeTask,
+                             addTask,
+                             changeFilter,
+                             changeTaskStatus,
+                             filter
+                         }: TodolistPropsType) => {
 
     // const inputRef = useRef<HTMLInputElement | null>(null)
     const [taskTitle, setTaskTitle] = useState("")
+    const [error, setError] = useState<string | null>(null)
 
     const mappedTasks = tasks.length ?
         tasks.map(task => {
@@ -30,13 +40,16 @@ export const Todolist = ({title, tasks, removeTask, addTask, changeFilter, chang
     // }
 
     const addTaskHandler = () => {
-        if(taskTitle.trim()) {
+        if (taskTitle.trim()) {
             addTask(taskTitle.trim())
-            setTaskTitle("")
+        } else {
+            setError("Title is required.")
         }
+        setTaskTitle("")
     }
 
     const addNewTitleHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        setError(null)
         setTaskTitle(e.currentTarget.value)
     }
 
@@ -52,17 +65,23 @@ export const Todolist = ({title, tasks, removeTask, addTask, changeFilter, chang
                 <input
                     value={taskTitle}
                     onChange={addNewTitleHandler}
-                    onKeyUp={addTaskOnKeyUpHandler}/>
+                    onKeyUp={addTaskOnKeyUpHandler}
+                    className={error ? s.error : ""}
+                />
                 <Button
                     title={"+"}
                     onClick={addTaskHandler}
                 />
             </div>
+            {error && <span className={s.errorMessage}>Title is required.</span>}
             {mappedTasks}
             <div>
-                <Button title={"All"} onClick={() => changeFilter("All")}/>
-                <Button title={"Active"} onClick={() => changeFilter("Active")}/>
-                <Button title={"Complete"} onClick={() => changeFilter("Completed")}/>
+                <Button title={"All"} onClick={() => changeFilter("All")}
+                        className={filter === "All" ? s.activeFilter : ""}/>
+                <Button title={"Active"} onClick={() => changeFilter("Active")}
+                        className={filter === "Active" ? s.activeFilter : ""}/>
+                <Button title={"Completed"} onClick={() => changeFilter("Completed")}
+                        className={filter === "Completed" ? s.activeFilter : ""}/>
             </div>
         </div>
     );
