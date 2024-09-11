@@ -3,18 +3,19 @@ import {TasksType} from "../App";
 import {Button} from "./Button";
 
 type TaskPropsType = TasksType & {
-    removeTask: (id: string) => void
-    changeTaskStatus: (id: string, newStatus: boolean) => void
+    todolistId: string
+    removeTask: (todolistId: string, id: string) => void
+    changeTaskStatus: (todolistId: string, id: string, newStatus: boolean) => void
 }
-export const Task = ({id, title, isDone, removeTask, changeTaskStatus}: TaskPropsType) => {
+export const Task = ({id, title, isDone, todolistId, removeTask, changeTaskStatus}: TaskPropsType) => {
     const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
         const newStatusValue = e.currentTarget.checked
-        changeTaskStatus(id, newStatusValue)
+        changeTaskStatus(todolistId, id, newStatusValue)
     }
 
     return (
         <li>
-            <Button title={"x"} onClick={()=>removeTask(id)}/>
+            <Button title={"x"} onClick={()=>removeTask(todolistId, id)}/>
             <input type="checkbox" onChange={changeTaskStatusHandler} checked={isDone}/>
             <span>{title}</span>
         </li>

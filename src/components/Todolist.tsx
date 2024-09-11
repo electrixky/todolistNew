@@ -5,22 +5,26 @@ import {Button} from "./Button";
 import s from "./todolist.module.css"
 
 type TodolistPropsType = {
+    todolistId: string
     title: string
     tasks: TasksType[]
-    removeTask: (id: string) => void
-    addTask: (newTitle: string) => void
-    changeFilter: (filter: FilterValueType) => void
-    changeTaskStatus: (id: string, newStatus: boolean) => void
+    removeTask: (todolistId: string, id: string) => void
+    addTask: (todolistId: string, newTitle: string) => void
+    changeFilter: (todolistId: string, filter: FilterValueType) => void
+    changeTaskStatus: (todolistId: string, id: string, newStatus: boolean) => void
     filter: FilterValueType
+    removeTodolist: (todolistId: string) => void
 };
 export const Todolist = ({
+                             todolistId,
                              title,
                              tasks,
                              removeTask,
                              addTask,
                              changeFilter,
                              changeTaskStatus,
-                             filter
+                             filter,
+                             removeTodolist
                          }: TodolistPropsType) => {
 
     // const inputRef = useRef<HTMLInputElement | null>(null)
@@ -29,7 +33,8 @@ export const Todolist = ({
 
     const mappedTasks = tasks.length ?
         tasks.map(task => {
-            return <Task key={task.id} removeTask={removeTask} changeTaskStatus={changeTaskStatus} {...task}/>
+            return <Task key={task.id} todolistId={todolistId} removeTask={removeTask}
+                         changeTaskStatus={changeTaskStatus} {...task}/>
         }) : <div>No tasks</div>
 
     // const addTaskHandler = () => {
@@ -41,7 +46,7 @@ export const Todolist = ({
 
     const addTaskHandler = () => {
         if (taskTitle.trim()) {
-            addTask(taskTitle.trim())
+            addTask(todolistId, taskTitle.trim())
         } else {
             setError("Title is required.")
         }
@@ -60,7 +65,10 @@ export const Todolist = ({
 
     return (
         <div>
-            <h3>{title}</h3>
+            <div className={s.todolistTitleContainer}>
+                <h3>{title}</h3>
+                <Button title={'x'} onClick={() => removeTodolist(todolistId)}/>
+            </div>
             <div>
                 <input
                     value={taskTitle}
@@ -76,11 +84,11 @@ export const Todolist = ({
             {error && <span className={s.errorMessage}>Title is required.</span>}
             {mappedTasks}
             <div>
-                <Button title={"All"} onClick={() => changeFilter("All")}
+                <Button title={"All"} onClick={() => changeFilter(todolistId, "All")}
                         className={filter === "All" ? s.activeFilter : ""}/>
-                <Button title={"Active"} onClick={() => changeFilter("Active")}
+                <Button title={"Active"} onClick={() => changeFilter(todolistId, "Active")}
                         className={filter === "Active" ? s.activeFilter : ""}/>
-                <Button title={"Completed"} onClick={() => changeFilter("Completed")}
+                <Button title={"Completed"} onClick={() => changeFilter(todolistId, "Completed")}
                         className={filter === "Completed" ? s.activeFilter : ""}/>
             </div>
         </div>

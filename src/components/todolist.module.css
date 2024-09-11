@@ -9,3 +9,8 @@
 .activeFilter {
     background-color: lightgreen;
 }
+
+.todolistTitleContainer {
+    display: flex;
+    align-items: center;
+}
