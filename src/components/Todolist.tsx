@@ -3,6 +3,7 @@ import {FilterValueType, TasksType} from "../App";
 import {Task} from "./Task";
 import {Button} from "./Button";
 import s from "./todolist.module.css"
+import {AddItemForm} from "./AddItemForm";
 
 type TodolistPropsType = {
     todolistId: string
@@ -28,8 +29,8 @@ export const Todolist = ({
                          }: TodolistPropsType) => {
 
     // const inputRef = useRef<HTMLInputElement | null>(null)
-    const [taskTitle, setTaskTitle] = useState("")
-    const [error, setError] = useState<string | null>(null)
+
+
 
     const mappedTasks = tasks.length ?
         tasks.map(task => {
@@ -44,23 +45,8 @@ export const Todolist = ({
     //     }
     // }
 
-    const addTaskHandler = () => {
-        if (taskTitle.trim()) {
-            addTask(todolistId, taskTitle.trim())
-        } else {
-            setError("Title is required.")
-        }
-        setTaskTitle("")
-    }
-
-    const addNewTitleHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setError(null)
-        setTaskTitle(e.currentTarget.value)
-    }
-
-    const addTaskOnKeyUpHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === "Enter")
-            addTaskHandler()
+    const addTaskCallback = (title: string) => {
+        addTask(todolistId, title)
     }
 
     return (
@@ -70,18 +56,8 @@ export const Todolist = ({
                 <Button title={'x'} onClick={() => removeTodolist(todolistId)}/>
             </div>
             <div>
-                <input
-                    value={taskTitle}
-                    onChange={addNewTitleHandler}
-                    onKeyUp={addTaskOnKeyUpHandler}
-                    className={error ? s.error : ""}
-                />
-                <Button
-                    title={"+"}
-                    onClick={addTaskHandler}
-                />
+                <AddItemForm addItem={addTaskCallback}/>
             </div>
-            {error && <span className={s.errorMessage}>Title is required.</span>}
             {mappedTasks}
             <div>
                 <Button title={"All"} onClick={() => changeFilter(todolistId, "All")}
