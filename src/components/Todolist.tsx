@@ -4,6 +4,7 @@ import {Task} from "./Task";
 import {Button} from "./Button";
 import s from "./todolist.module.css"
 import {AddItemForm} from "./AddItemForm";
+import {EditableSpan} from "./EditableSpan";
 
 type TodolistPropsType = {
     todolistId: string
@@ -15,6 +16,8 @@ type TodolistPropsType = {
     changeTaskStatus: (todolistId: string, id: string, newStatus: boolean) => void
     filter: FilterValueType
     removeTodolist: (todolistId: string) => void
+    updateTask: (todolistId: string, taskId: string, title: string) => void
+    updateTodolist: (todolistId: string, title: string) => void
 };
 export const Todolist = ({
                              todolistId,
@@ -25,7 +28,9 @@ export const Todolist = ({
                              changeFilter,
                              changeTaskStatus,
                              filter,
-                             removeTodolist
+                             removeTodolist,
+                             updateTask,
+                             updateTodolist
                          }: TodolistPropsType) => {
 
     // const inputRef = useRef<HTMLInputElement | null>(null)
@@ -34,8 +39,12 @@ export const Todolist = ({
 
     const mappedTasks = tasks.length ?
         tasks.map(task => {
+            const changeTaskTitleHandler = (title: string) => {
+                updateTask(todolistId, task.id, title)
+            }
+
             return <Task key={task.id} todolistId={todolistId} removeTask={removeTask}
-                         changeTaskStatus={changeTaskStatus} {...task}/>
+                         changeTaskStatus={changeTaskStatus} updateTask={changeTaskTitleHandler} {...task}/>
         }) : <div>No tasks</div>
 
     // const addTaskHandler = () => {
@@ -49,10 +58,14 @@ export const Todolist = ({
         addTask(todolistId, title)
     }
 
+    const updateTodolistHandler = (title: string) => {
+        updateTodolist(todolistId, title)
+    }
+
     return (
         <div>
             <div className={s.todolistTitleContainer}>
-                <h3>{title}</h3>
+                <EditableSpan value={title} onChange={updateTodolistHandler}/>
                 <Button title={'x'} onClick={() => removeTodolist(todolistId)}/>
             </div>
             <div>
