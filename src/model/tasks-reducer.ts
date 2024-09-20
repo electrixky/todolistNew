@@ -64,13 +64,10 @@ export const removeTaskAC = (payload: { taskId: string, todolistId: string }) =>
     } as const
 }
 
-export const addTaskAC = (todolistId: string, title: string) => {
+export const addTaskAC = (payload: {todolistId: string, title: string}) => {
     return {
         type: 'ADD-TASK',
-        payload: {
-            title,
-            todolistId
-        }
+        payload
     } as const
 }
 

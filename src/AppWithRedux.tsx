@@ -43,12 +43,12 @@ function AppWithRedux() {
         dispatch(removeTaskAC({taskId, todolistId}))
     }
 
-    const addTask = (todolistId: string, newTitle: string) => {
-        dispatch(addTaskAC(todolistId, newTitle))
+    const addTask = (todolistId: string, title: string) => {
+        dispatch(addTaskAC({todolistId, title}))
     }
 
     const changeFilter = (todolistId: string, filter: FilterValueType) => {
-        dispatch(changeTodolistFilterAC(todolistId, filter))
+        dispatch(changeTodolistFilterAC({todolistId, filter}))
     }
 
     const changeTaskStatus = (taskId: string, isDone: boolean, todolistId: string) => {
