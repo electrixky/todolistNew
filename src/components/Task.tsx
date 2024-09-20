@@ -5,7 +5,7 @@ import {EditableSpan} from "./EditableSpan";
 
 type TaskPropsType = TaskType & {
     todolistId: string
-    removeTask: (todolistId: string, id: string) => void
+    removeTask: (id: string, todolistId: string) => void
     changeTaskStatus: (taskId: string, isDone: boolean, todolistId: string) => void
     updateTask: (todolistId: string, taskId: string, title: string) => void
 }
@@ -21,7 +21,7 @@ export const Task = ({id, title, isDone, todolistId, removeTask, changeTaskStatu
 
     return (
         <li>
-            <Button title={"x"} onClick={() => removeTask(todolistId, id)}/>
+            <Button title={"x"} onClick={() => removeTask(id, todolistId)}/>
             <input type="checkbox" onChange={changeTaskStatusHandler} checked={isDone}/>
             <EditableSpan value={title} onChange={changeTaskTitleHandler}/>
         </li>
