@@ -1,15 +1,16 @@
 import React, {ChangeEvent, KeyboardEvent, useRef, useState} from "react";
-import {FilterValueType, TasksType} from "../App";
+import {FilterValueType, TaskType} from "../AppWithRedux";
 import {Task} from "./Task";
 import {Button} from "./Button";
 import s from "./todolist.module.css"
 import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
+import {log} from "util";
 
 type TodolistPropsType = {
     todolistId: string
     title: string
-    tasks: TasksType[]
+    tasks: TaskType[]
     removeTask: (todolistId: string, id: string) => void
     addTask: (todolistId: string, newTitle: string) => void
     changeFilter: (todolistId: string, filter: FilterValueType) => void
@@ -35,9 +36,7 @@ export const Todolist = ({
 
     // const inputRef = useRef<HTMLInputElement | null>(null)
 
-
-
-    const mappedTasks = tasks.length ?
+    const mappedTasks = tasks ?
         tasks.map(task => {
             const changeTaskTitleHandler = (title: string) => {
                 updateTask(todolistId, task.id, title)
@@ -46,6 +45,21 @@ export const Todolist = ({
             return <Task key={task.id} todolistId={todolistId} removeTask={removeTask}
                          changeTaskStatus={changeTaskStatus} updateTask={changeTaskTitleHandler} {...task}/>
         }) : <div>No tasks</div>
+
+    // const mappedTasks = tasks.map(task => {
+    //     const changeTaskTitleHandler = (title: string) => {
+    //         updateTask(todolistId, task.id, title)
+    //     }
+    //
+    //     return <Task
+    //         key={task.id}
+    //         todolistId={todolistId}
+    //         removeTask={removeTask}
+    //         changeTaskStatus={changeTaskStatus}
+    //         updateTask={changeTaskTitleHandler}
+    //         {...task}
+    //     />
+    // })
 
     // const addTaskHandler = () => {
     //     if (inputRef.current) {

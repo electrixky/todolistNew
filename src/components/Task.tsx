@@ -1,9 +1,9 @@
 import React, {ChangeEvent} from "react";
-import {TasksType} from "../App";
+import {TaskType} from "../AppWithRedux";
 import {Button} from "./Button";
 import {EditableSpan} from "./EditableSpan";
 
-type TaskPropsType = TasksType & {
+type TaskPropsType = TaskType & {
     todolistId: string
     removeTask: (todolistId: string, id: string) => void
     changeTaskStatus: (taskId: string, isDone: boolean, todolistId: string) => void
