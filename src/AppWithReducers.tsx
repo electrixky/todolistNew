@@ -8,7 +8,7 @@ import {
     addTodolistAC,
     changeTodolistFilterAC,
     changeTodolistTitleAC,
-    todolistsReducer
+    todolistsReducer, removeTodolistAC
 } from "./model/todolists-reducer";
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from "./model/tasks-reducer";
 
@@ -42,24 +42,25 @@ function App() {
         ]
     }
 
-    let initialTasks: TasksStateType = {
-        [todolistID1]: [
-            {id: v1(), title: 'HTML&CSS', isDone: true},
-            {id: v1(), title: 'JS', isDone: true},
-            {id: v1(), title: 'ReactJS', isDone: false},
-        ],
-        [todolistID2]: [
-            {id: v1(), title: 'Rest API', isDone: true},
-            {id: v1(), title: 'GraphQL', isDone: false},
-        ],
+    const initTasks = (): TasksStateType => {
+        return {
+            [todolistID1]: [
+                {id: v1(), title: 'HTML&CSS', isDone: true},
+                {id: v1(), title: 'JS', isDone: true},
+                {id: v1(), title: 'ReactJS', isDone: false},
+            ],
+            [todolistID2]: [
+                {id: v1(), title: 'Rest API', isDone: true},
+                {id: v1(), title: 'GraphQL', isDone: false},
+            ],
+        }
     }
 
-
-    const [todolists, dispatchToTodolists] = useReducer(todolistsReducer, [], initTodolists)
+    let [todolists, dispatchToTodolists] = useReducer(todolistsReducer, [], initTodolists)
     // let [todolists, dispatchToTodolists] = useReducer(todolistsReducer, undefined, initTodolists)
     // let [todolists, dispatchToTodolists] = useReducer<Reducer<TodolistType[], ActionsType>>(todolistsReducer, [], initTodolists)
 
-    let [tasks, dispatchToTasks] = useReducer(tasksReducer, initialTasks)
+    let [tasks, dispatchToTasks] = useReducer(tasksReducer, [], initTasks)
 
     const removeTask = (taskId: string, todolistId: string) => {
         dispatchToTasks(removeTaskAC({taskId, todolistId}))
@@ -68,8 +69,6 @@ function App() {
     const addTask = (todolistId: string, newTitle: string) => {
         dispatchToTasks(addTaskAC(todolistId, newTitle))
     }
-
-    // let tasksForTodolist = tasks
 
     const filteredTasks = (todolistId: string, filter: FilterValueType) => {
         switch (filter) {
@@ -86,13 +85,13 @@ function App() {
         dispatchToTodolists(changeTodolistFilterAC(todolistId, filter))
     }
 
-    const changeTaskStatus = (todolistId: string, id: string, newStatus: boolean) => {
-        dispatchToTasks(changeTaskStatusAC(id, newStatus, todolistId))
+    const changeTaskStatus = (taskId: string, isDone: boolean, todolistId: string) => {
+        dispatchToTasks(changeTaskStatusAC({taskId, isDone, todolistId}))
     }
 
     const removeTodolist = (todolistId: string) => {
-        dispatchToTasks(removeTodolist(todolistId))
-        dispatchToTodolists(removeTodolist(todolistId))
+        dispatchToTasks(removeTodolistAC(todolistId))
+        dispatchToTodolists(removeTodolistAC(todolistId))
     }
 
     const addTodolist = (title: string) => {
@@ -101,12 +100,12 @@ function App() {
         dispatchToTodolists(action)
     }
 
-    const updateTodolistTitle = (todolistId: string, title: string) => {
+    const changeTodolistTitle = (todolistId: string, title: string) => {
         dispatchToTodolists(changeTodolistTitleAC(todolistId, title))
     }
 
-    const updateTaskTitle = (todolistId: string, taskId: string, title: string) => {
-        dispatchToTasks(changeTaskTitleAC(taskId, title, todolistId))
+    const changeTaskTitle = (todolistId: string, taskId: string, title: string) => {
+        dispatchToTasks(changeTaskTitleAC({taskId, title, todolistId}))
     }
 
     return (
@@ -125,8 +124,8 @@ function App() {
                         changeTaskStatus={changeTaskStatus}
                         filter={todolist.filter}
                         removeTodolist={removeTodolist}
-                        updateTodolist={updateTodolistTitle}
-                        updateTask={updateTaskTitle}
+                        updateTodolist={changeTodolistTitle}
+                        updateTask={changeTaskTitle}
                     />
                 )
             })}

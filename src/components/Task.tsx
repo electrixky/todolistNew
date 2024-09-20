@@ -6,13 +6,13 @@ import {EditableSpan} from "./EditableSpan";
 type TaskPropsType = TasksType & {
     todolistId: string
     removeTask: (todolistId: string, id: string) => void
-    changeTaskStatus: (todolistId: string, id: string, newStatus: boolean) => void
+    changeTaskStatus: (taskId: string, isDone: boolean, todolistId: string) => void
     updateTask: (todolistId: string, taskId: string, title: string) => void
 }
 export const Task = ({id, title, isDone, todolistId, removeTask, changeTaskStatus, updateTask}: TaskPropsType) => {
     const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
         const newStatusValue = e.currentTarget.checked
-        changeTaskStatus(todolistId, id, newStatusValue)
+        changeTaskStatus(id, newStatusValue, todolistId)
     }
 
     const changeTaskTitleHandler = (title: string) => {
@@ -21,7 +21,7 @@ export const Task = ({id, title, isDone, todolistId, removeTask, changeTaskStatu
 
     return (
         <li>
-            <Button title={"x"} onClick={()=>removeTask(todolistId, id)}/>
+            <Button title={"x"} onClick={() => removeTask(todolistId, id)}/>
             <input type="checkbox" onChange={changeTaskStatusHandler} checked={isDone}/>
             <EditableSpan value={title} onChange={changeTaskTitleHandler}/>
         </li>
