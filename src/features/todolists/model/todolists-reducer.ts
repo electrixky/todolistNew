@@ -1,5 +1,12 @@
-import {FilterValueType, TodolistType} from "../AppWithRedux";
 import {v1} from "uuid";
+
+export type FilterValueType = "All" | "Active" | "Completed"
+
+export type TodolistType = {
+    id: string
+    title: string
+    filter: FilterValueType
+}
 
 const initialState: TodolistType[] = []
 

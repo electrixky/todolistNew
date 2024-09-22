@@ -1,7 +1,7 @@
 import React, {ChangeEvent} from "react";
-import {TaskType} from "../AppWithRedux";
-import {Button} from "./Button";
-import {EditableSpan} from "./EditableSpan";
+import {TaskType} from "../../../../../../../app/App";
+import {Button} from "../../../../../../../common/components/Button/Button";
+import {EditableSpan} from "../../../../../../../common/components/EditableSpan/EditableSpan";
 
 type TaskPropsType = TaskType & {
     todolistId: string

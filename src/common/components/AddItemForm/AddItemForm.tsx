@@ -1,7 +1,7 @@
 // @flow
 import * as React from 'react';
-import s from "./todolist.module.css";
-import {Button} from "./Button";
+import s from "../../../features/todolists/ui/Todolists/Todolist/todolist.module.css";
+import {Button} from "../Button/Button";
 import {ChangeEvent, KeyboardEvent, useState} from "react";
 
 type AddItemFormPropsType = {
