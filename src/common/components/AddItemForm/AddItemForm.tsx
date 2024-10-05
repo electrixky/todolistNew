@@ -4,10 +4,10 @@ import s from "../../../features/todolists/ui/Todolists/Todolist/todolist.module
 import {Button} from "../Button/Button";
 import {ChangeEvent, KeyboardEvent, useState} from "react";
 
-type AddItemFormPropsType = {
+type Props = {
     addItem: (title: string) => void
 };
-export const AddItemForm = ({addItem}: AddItemFormPropsType) => {
+export const AddItemForm = ({addItem}: Props) => {
 
     const [title, setTitle] = useState("")
     const [error, setError] = useState<string | null>(null)
@@ -21,21 +21,23 @@ export const AddItemForm = ({addItem}: AddItemFormPropsType) => {
         setTitle("")
     }
 
-    const addNewTitleHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    const changeItemHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setError(null)
         setTitle(e.currentTarget.value)
     }
 
     const addItemOnKeyUpHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === "Enter")
+        setError(null)
+        if (e.key === 'Enter') {
             addItemHandler()
+        }
     }
 
     return (
         <div>
             <input
                 value={title}
-                onChange={addNewTitleHandler}
+                onChange={changeItemHandler}
                 onKeyUp={addItemOnKeyUpHandler}
                 className={error ? s.error : ""}
             />

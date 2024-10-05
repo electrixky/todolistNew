@@ -29,7 +29,7 @@ export const tasksReducer = (state: TasksStateType = initialTasksState, action: 
                 isDone: false,
                 id: v1()
             }
-            console.log(newTask)
+            debugger
             return {...state, [action.payload.todolistId]: [newTask, ...state[action.payload.todolistId]]}
         }
 

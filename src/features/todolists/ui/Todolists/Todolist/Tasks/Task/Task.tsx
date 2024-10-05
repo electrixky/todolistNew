@@ -13,6 +13,10 @@ export const Task = ({task, todolist}: Props) => {
 
     const dispatch = useAppDispatch()
 
+    const removeTaskHandler = () => {
+        dispatch(removeTaskAC({taskId: task.id, todolistId: todolist.id}))
+    }
+
     const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
         const isDone = e.currentTarget.checked
         dispatch(changeTaskStatusAC({taskId: task.id, isDone, todolistId: todolist.id}))
@@ -20,10 +24,6 @@ export const Task = ({task, todolist}: Props) => {
 
     const changeTaskTitleHandler = (title: string) => {
         dispatch(changeTaskTitleAC({taskId: task.id, title, todolistId: todolist.id}))
-    }
-
-    const removeTaskHandler = () => {
-        dispatch(removeTaskAC({taskId: task.id, todolistId: todolist.id}))
     }
 
     return (

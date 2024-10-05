@@ -9,11 +9,11 @@ export const Todolists = () => {
 
     return (
         <div>
-            {todolists.map(todolist => {
+            {todolists.map(tl => {
                 return (
                     <Todolist
-                        key={todolist.id}
-                        todolist={todolist}
+                        key={tl.id}
+                        todolist={tl}
                     />
                 )
             })}

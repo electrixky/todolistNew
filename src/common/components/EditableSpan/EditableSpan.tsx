@@ -28,6 +28,6 @@ export const EditableSpan = ({value, onChange}: EditableSpanPropsType) => {
                 onBlur={editModeHandler}
                 autoFocus/>
             :
-            <span onDoubleClick={editModeHandler}>{title}</span>
+            <span onDoubleClick={editModeHandler}>{value}</span>
     );
 };
