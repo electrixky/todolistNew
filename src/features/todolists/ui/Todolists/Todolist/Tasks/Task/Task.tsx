@@ -1,29 +1,36 @@
 import React, {ChangeEvent} from "react";
-import {TaskType} from "../../../../../../../app/App";
 import {Button} from "../../../../../../../common/components/Button/Button";
 import {EditableSpan} from "../../../../../../../common/components/EditableSpan/EditableSpan";
+import {TodolistType} from "../../../../../model/todolists-reducer";
+import {useAppDispatch} from "../../../../../../../common/hooks/useAppDispatch";
+import {changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, TaskType} from "../../../../../model/tasks-reducer";
 
-type TaskPropsType = TaskType & {
-    todolistId: string
-    removeTask: (id: string, todolistId: string) => void
-    changeTaskStatus: (taskId: string, isDone: boolean, todolistId: string) => void
-    updateTask: (todolistId: string, taskId: string, title: string) => void
+type Props = {
+    task: TaskType
+    todolist: TodolistType
 }
-export const Task = ({id, title, isDone, todolistId, removeTask, changeTaskStatus, updateTask}: TaskPropsType) => {
+export const Task = ({task, todolist}: Props) => {
+
+    const dispatch = useAppDispatch()
+
     const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        const newStatusValue = e.currentTarget.checked
-        changeTaskStatus(id, newStatusValue, todolistId)
+        const isDone = e.currentTarget.checked
+        dispatch(changeTaskStatusAC({taskId: task.id, isDone, todolistId: todolist.id}))
     }
 
     const changeTaskTitleHandler = (title: string) => {
-        updateTask(todolistId, id, title)
+        dispatch(changeTaskTitleAC({taskId: task.id, title, todolistId: todolist.id}))
+    }
+
+    const removeTaskHandler = () => {
+        dispatch(removeTaskAC({taskId: task.id, todolistId: todolist.id}))
     }
 
     return (
         <li>
-            <Button title={"x"} onClick={() => removeTask(id, todolistId)}/>
-            <input type="checkbox" onChange={changeTaskStatusHandler} checked={isDone}/>
-            <EditableSpan value={title} onChange={changeTaskTitleHandler}/>
+            <Button title={"x"} onClick={removeTaskHandler}/>
+            <input type="checkbox" onChange={changeTaskStatusHandler} checked={task.isDone}/>
+            <EditableSpan value={task.title} onChange={changeTaskTitleHandler}/>
         </li>
     );
 };
