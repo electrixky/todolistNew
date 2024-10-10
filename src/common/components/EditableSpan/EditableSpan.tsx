@@ -2,11 +2,11 @@
 import * as React from 'react';
 import {ChangeEvent, useState} from "react";
 
-type EditableSpanPropsType = {
+type Props = {
     value: string
     onChange: (newTitle: string) => void
 };
-export const EditableSpan = ({value, onChange}: EditableSpanPropsType) => {
+export const EditableSpan = ({value, onChange}: Props) => {
 
     const [editMode, setEditMode] = useState(false)
     const [title, setTitle] = useState(value)
