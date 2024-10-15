@@ -1,16 +1,16 @@
 .error {
-    border: red 1px solid;
+  border: red 1px solid;
 }
 
 .errorMessage {
-    color: red;
+  color: red;
 }
 
 .activeFilter {
-    background-color: lightgreen;
+  background-color: lightgreen;
 }
 
 .todolistTitleContainer {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
