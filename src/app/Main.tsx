@@ -1,12 +1,11 @@
-import { AddItemForm } from "../common/components/AddItemForm/AddItemForm"
-import { Todolist } from "../features/todolists/ui/Todolists/Todolist/Todolist"
+import { AddItemForm } from "common/components"
 import React from "react"
-import { addTodolistAC, addTodolistTC } from "../features/todolists/model/todolists-reducer"
-import { useDispatch } from "react-redux"
+import { addTodolistTC } from "../features/todolists/model/todolists-reducer"
 import { Todolists } from "../features/todolists/ui/Todolists/Todolists"
+import { useAppDispatch } from "common/hooks/useAppDispatch"
 
 export const Main = () => {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const addTodolist = (title: string) => {
     dispatch(addTodolistTC(title))
   }

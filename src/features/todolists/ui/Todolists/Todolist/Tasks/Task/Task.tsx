@@ -2,7 +2,7 @@ import React, { ChangeEvent } from "react"
 import { Button } from "common/components/Button/Button"
 import { DomainTodolist } from "../../../../../model/todolists-reducer"
 import { useAppDispatch } from "common/hooks/useAppDispatch"
-import { removeTaskAC, updateTaskTC } from "../../../../../model/tasks-reducer"
+import { removeTaskAC, removeTaskTC, updateTaskTC } from "../../../../../model/tasks-reducer"
 import { EditableSpan } from "common/components"
 import { TaskStatus } from "common/enums/enums"
 import { DomainTask } from "../../../../../api/tasksApi.types"
@@ -15,7 +15,7 @@ export const Task = ({ task, todolist }: Props) => {
   const dispatch = useAppDispatch()
 
   const removeTaskHandler = () => {
-    dispatch(removeTaskAC({ taskId: task.id, todolistId: todolist.id }))
+    dispatch(removeTaskTC({ taskId: task.id, todolistId: todolist.id }))
   }
 
   const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
