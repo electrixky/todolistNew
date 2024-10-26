@@ -5,14 +5,17 @@ import { selectTodolists } from "../../model/todolistsSelectors"
 import { todolistsApi } from "../../api/todolistsApi"
 import { Simulate } from "react-dom/test-utils"
 import loadedData = Simulate.loadedData
+import { setTodolistsAC } from "../../model/todolists-reducer"
+import { useAppDispatch } from "common/hooks/useAppDispatch"
 
 export const Todolists = () => {
   let todolists = useAppSelector(selectTodolists)
 
+  const dispatch = useAppDispatch()
+
   useEffect(() => {
     todolistsApi.getTodolists().then((res) => {
-      const todolists = res.data
-      console.log(todolists)
+      dispatch(setTodolistsAC(res.data))
     })
   }, [])
 

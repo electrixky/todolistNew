@@ -1,4 +1,4 @@
-import { changeTodolistTitleAC, removeTodolistAC, TodolistType } from "../../../../model/todolists-reducer"
+import { changeTodolistTitleAC, removeTodolistAC, DomainTodolist } from "../../../../model/todolists-reducer"
 import { useAppDispatch } from "../../../../../../common/hooks/useAppDispatch"
 import s from "../todolist.module.css"
 import { EditableSpan } from "../../../../../../common/components/EditableSpan/EditableSpan"
@@ -6,7 +6,7 @@ import { Button } from "../../../../../../common/components/Button/Button"
 import React from "react"
 
 type Props = {
-  todolist: TodolistType
+  todolist: DomainTodolist
 }
 export const TodolistTitle = ({ todolist }: Props) => {
   const { id, title } = todolist

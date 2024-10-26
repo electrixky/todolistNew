@@ -1,6 +1,6 @@
 import React from "react"
 import { AddItemForm } from "../../../../../common/components/AddItemForm/AddItemForm"
-import { TodolistType } from "../../../model/todolists-reducer"
+import { DomainTodolist } from "../../../model/todolists-reducer"
 import { useAppDispatch } from "../../../../../common/hooks/useAppDispatch"
 import { addTaskAC } from "../../../model/tasks-reducer"
 import { TodolistTitle } from "./TodolistTitle/TodolistTitle"
@@ -8,7 +8,7 @@ import { Tasks } from "./Tasks/Tasks"
 import { FilterTasksButtons } from "./FilterTasksButtons/FilterTasksButtons"
 
 type Props = {
-  todolist: TodolistType
+  todolist: DomainTodolist
 }
 
 export const Todolist = ({ todolist }: Props) => {

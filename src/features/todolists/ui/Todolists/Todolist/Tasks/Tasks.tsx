@@ -1,11 +1,11 @@
 import { Task } from "./Task/Task"
 import React from "react"
-import { TodolistType } from "../../../../model/todolists-reducer"
+import { DomainTodolist } from "../../../../model/todolists-reducer"
 import { useAppSelector } from "../../../../../../common/hooks/useAppSelector"
 import { selectTasks } from "../../../../model/tasksSelectors"
 
 type Props = {
-  todolist: TodolistType
+  todolist: DomainTodolist
 }
 export const Tasks = ({ todolist }: Props) => {
   const tasks = useAppSelector(selectTasks)
@@ -24,9 +24,10 @@ export const Tasks = ({ todolist }: Props) => {
 
   return (
     <div>
-      {tasksForTodolist.length === 0 ? (
+      {tasksForTodolist && tasksForTodolist.length === 0 ? (
         <div>No tasks</div>
       ) : (
+        tasksForTodolist &&
         tasksForTodolist.map((task) => {
           return <Task task={task} todolist={todolist} />
         })

@@ -6,11 +6,11 @@ import {
   todolistsReducer,
 } from "../todolists-reducer"
 import { v1 } from "uuid"
-import { TodolistType } from "../../../../app/App"
+import { DomainTodolist } from "../../../../app/App"
 
 let todolistId1: string
 let todolistId2: string
-let startState: TodolistType[] = []
+let startState: DomainTodolist[] = []
 
 beforeEach(() => {
   todolistId1 = v1()

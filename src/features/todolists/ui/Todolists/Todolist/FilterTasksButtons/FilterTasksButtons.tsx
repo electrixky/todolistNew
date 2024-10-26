@@ -1,11 +1,11 @@
 import * as React from "react"
-import { changeTodolistFilterAC, FilterValueType, TodolistType } from "../../../../model/todolists-reducer"
+import { changeTodolistFilterAC, FilterValueType, DomainTodolist } from "../../../../model/todolists-reducer"
 import { Button } from "../../../../../../common/components/Button/Button"
 import s from "../todolist.module.css"
 import { useAppDispatch } from "../../../../../../common/hooks/useAppDispatch"
 
 type Props = {
-  todolist: TodolistType
+  todolist: DomainTodolist
 }
 export const FilterTasksButtons = ({ todolist }: Props) => {
   const { id, filter } = todolist
