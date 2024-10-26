@@ -2,11 +2,11 @@ import React, { ChangeEvent } from "react"
 import { Button } from "common/components/Button/Button"
 import { DomainTodolist } from "../../../../../model/todolists-reducer"
 import { useAppDispatch } from "common/hooks/useAppDispatch"
-import { changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, TaskType } from "../../../../../model/tasks-reducer"
+import { changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, DomainTask } from "../../../../../model/tasks-reducer"
 import { EditableSpan } from "common/components"
 
 type Props = {
-  task: TaskType
+  task: DomainTask
   todolist: DomainTodolist
 }
 export const Task = ({ task, todolist }: Props) => {
