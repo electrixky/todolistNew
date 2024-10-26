@@ -3,6 +3,7 @@ import React from "react"
 import { DomainTodolist } from "../../../../model/todolists-reducer"
 import { useAppSelector } from "../../../../../../common/hooks/useAppSelector"
 import { selectTasks } from "../../../../model/tasksSelectors"
+import { TaskStatus } from "common/enums/enums"
 
 type Props = {
   todolist: DomainTodolist
@@ -15,11 +16,11 @@ export const Tasks = ({ todolist }: Props) => {
   let tasksForTodolist = allTodolistTasks
 
   if (todolist.filter === "Active") {
-    tasksForTodolist = allTodolistTasks.filter((task) => !task.isDone)
+    tasksForTodolist = allTodolistTasks.filter((task) => task.status === TaskStatus.New)
   }
 
   if (todolist.filter === "Completed") {
-    tasksForTodolist = allTodolistTasks.filter((task) => task.isDone)
+    tasksForTodolist = allTodolistTasks.filter((task) => task.status === TaskStatus.Completed)
   }
 
   return (

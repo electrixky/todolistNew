@@ -79,6 +79,30 @@ export type ChangeTodolistTitleActionType = ReturnType<typeof changeTodolistTitl
 export type ChangeTodolistFilterActionType = ReturnType<typeof changeTodolistFilterAC>
 export type SetTodolistsActionType = ReturnType<typeof setTodolistsAC>
 
+export const fetchTodolistsTC = () => (dispatch: Dispatch) => {
+  todolistsApi.getTodolists().then((res) => {
+    dispatch(setTodolistsAC(res.data))
+  })
+}
+
+export const addTodolistTC = (title: string) => (dispatch: Dispatch) => {
+  todolistsApi.createTodolist(title).then((res) => {
+    dispatch(addTodolistAC(res.data.data.item))
+  })
+}
+
+export const removeTodolistTC = (id: string) => (dispatch: Dispatch) => {
+  todolistsApi.deleteTodolist(id).then((res) => {
+    dispatch(removeTodolistAC(id))
+  })
+}
+
+export const updateTodolistTitleTC = (arg: { id: string; title: string }) => (dispatch: Dispatch) => {
+  todolistsApi.updateTodolist(arg).then((res) => {
+    dispatch(changeTodolistTitleAC(arg))
+  })
+}
+
 export type TodolistActionsType =
   | RemoveTodolistActionType
   | AddTodolistActionType

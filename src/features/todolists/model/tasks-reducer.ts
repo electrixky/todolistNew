@@ -27,13 +27,8 @@ export const tasksReducer = (state: TasksStateType = initialTasksState, action: 
     }
 
     case "ADD-TASK": {
-      const newTask: DomainTask = {
-        title: action.payload.title,
-        isDone: false,
-        id: v1(),
-      }
-      debugger
-      return { ...state, [action.payload.todolistId]: [newTask, ...state[action.payload.todolistId]] }
+      const newTask = action.payload.task
+      return { ...state, [newTask.todoListId]: [newTask, ...state[newTask.todoListId]] }
     }
 
     case "UPDATE-TASK": {
@@ -80,11 +75,8 @@ export const removeTaskAC = (payload: { taskId: string; todolistId: string }) =>
   } as const
 }
 
-export const addTaskAC = (payload: { todolistId: string; title: string }) => {
-  return {
-    type: "ADD-TASK",
-    payload,
-  } as const
+export const addTaskAC = (payload: { task: DomainTask }) => {
+  return { type: "ADD-TASK", payload } as const
 }
 
 export const updateTaskAC = (payload: { taskId: string; todolistId: string; domainModel: UpdateTaskDomainModel }) => {

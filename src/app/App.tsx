@@ -3,9 +3,10 @@ import { Header } from "common/components"
 import { Main } from "./Main"
 import { fetchTodolistsThunk } from "../features/todolists/model/todolists-reducer"
 import { useDispatch } from "react-redux"
+import { useAppDispatch } from "common/hooks/useAppDispatch"
 
 function App() {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
   useEffect(() => {
     dispatch(fetchTodolistsThunk)

@@ -2,8 +2,10 @@ import React, { ChangeEvent } from "react"
 import { Button } from "common/components/Button/Button"
 import { DomainTodolist } from "../../../../../model/todolists-reducer"
 import { useAppDispatch } from "common/hooks/useAppDispatch"
-import { changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, DomainTask } from "../../../../../model/tasks-reducer"
+import { removeTaskAC, updateTaskTC } from "../../../../../model/tasks-reducer"
 import { EditableSpan } from "common/components"
+import { TaskStatus } from "common/enums/enums"
+import { DomainTask } from "../../../../../api/tasksApi.types"
 
 type Props = {
   task: DomainTask
@@ -17,18 +19,18 @@ export const Task = ({ task, todolist }: Props) => {
   }
 
   const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    const isDone = e.currentTarget.checked
-    dispatch(changeTaskStatusAC({ taskId: task.id, isDone, todolistId: todolist.id }))
+    let status = e.currentTarget.checked ? TaskStatus.Completed : TaskStatus.New
+    dispatch(updateTaskTC({ taskId: task.id, todolistId: todolist.id, domainModel: { status } }))
   }
 
   const changeTaskTitleHandler = (title: string) => {
-    dispatch(changeTaskTitleAC({ taskId: task.id, title, todolistId: todolist.id }))
+    dispatch(updateTaskTC({ taskId: task.id, todolistId: todolist.id, domainModel: { title } }))
   }
 
   return (
     <li>
       <Button title={"x"} onClick={removeTaskHandler} />
-      <input type="checkbox" onChange={changeTaskStatusHandler} checked={task.isDone} />
+      <input type="checkbox" onChange={changeTaskStatusHandler} checked={task.status === TaskStatus.Completed} />
       <EditableSpan value={task.title} onChange={changeTaskTitleHandler} />
     </li>
   )

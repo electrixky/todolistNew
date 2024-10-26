@@ -5,7 +5,7 @@ import { selectTodolists } from "../../model/todolistsSelectors"
 import { todolistsApi } from "../../api/todolistsApi"
 import { Simulate } from "react-dom/test-utils"
 import loadedData = Simulate.loadedData
-import { setTodolistsAC } from "../../model/todolists-reducer"
+import { fetchTodolistsTC, setTodolistsAC } from "../../model/todolists-reducer"
 import { useAppDispatch } from "common/hooks/useAppDispatch"
 
 export const Todolists = () => {
@@ -14,15 +14,14 @@ export const Todolists = () => {
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    todolistsApi.getTodolists().then((res) => {
-      dispatch(setTodolistsAC(res.data))
-    })
+    dispatch(fetchTodolistsTC())
   }, [])
 
-  //   <div>
-  //     {todolists.map((tl) => {
-  //       return <Todolist key={tl.id} todolist={tl} />
-  //     })}
-  //   </div>,
-  // )
+  return (
+    <>
+      {todolists.map((tl) => {
+        return <Todolist key={tl.id} todolist={tl} />
+      })}
+    </>
+  )
 }
