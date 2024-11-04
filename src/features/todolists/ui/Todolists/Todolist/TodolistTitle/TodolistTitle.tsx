@@ -1,8 +1,14 @@
-import { changeTodolistTitleAC, removeTodolistAC, DomainTodolist } from "../../../../model/todolists-reducer"
-import { useAppDispatch } from "../../../../../../common/hooks/useAppDispatch"
+import {
+  changeTodolistTitleAC,
+  removeTodolistAC,
+  DomainTodolist,
+  removeTodolistTC,
+  updateTodolistTitleTC,
+} from "../../../../model/todolists-reducer"
+import { useAppDispatch } from "common/hooks/useAppDispatch"
 import s from "../todolist.module.css"
-import { EditableSpan } from "../../../../../../common/components/EditableSpan/EditableSpan"
-import { Button } from "../../../../../../common/components/Button/Button"
+import { EditableSpan } from "common/components"
+import { Button } from "common/components/Button/Button"
 import React from "react"
 
 type Props = {
@@ -14,11 +20,11 @@ export const TodolistTitle = ({ todolist }: Props) => {
   const dispatch = useAppDispatch()
 
   const updateTodolistHandler = (title: string) => {
-    dispatch(changeTodolistTitleAC({ id, title }))
+    dispatch(updateTodolistTitleTC({ id, title }))
   }
 
   const removeTodolistHandler = () => {
-    dispatch(removeTodolistAC(id))
+    dispatch(removeTodolistTC(id))
   }
 
   return (
