@@ -6,9 +6,5 @@ type HeaderProps = {}
 export const Header = (props: HeaderProps) => {
   const status = useSelector(selectAppStatus)
 
-  return (
-    <div>
-      <LinearProgress />
-    </div>
-  )
+  return <div>{status === "loading" && <LinearProgress />}</div>
 }

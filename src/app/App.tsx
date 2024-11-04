@@ -1,5 +1,5 @@
 import React, { useEffect } from "react"
-import { Header } from "common/components"
+import { ErrorSnackbar, Header } from "common/components"
 import { Main } from "./Main"
 import { fetchTodolistsThunk } from "../features/todolists/model/todolists-reducer"
 import { useDispatch } from "react-redux"
@@ -16,6 +16,7 @@ function App() {
     <div className="App">
       <Header />
       <Main />
+      <ErrorSnackbar />
     </div>
   )
 }
