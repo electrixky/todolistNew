@@ -1,21 +1,16 @@
-import {
-  changeTodolistTitleAC,
-  removeTodolistAC,
-  DomainTodolist,
-  removeTodolistTC,
-  updateTodolistTitleTC,
-} from "../../../../model/todolists-reducer"
+import { DomainTodolist, removeTodolistTC, updateTodolistTitleTC } from "../../../../model/todolists-reducer"
 import { useAppDispatch } from "common/hooks/useAppDispatch"
-import s from "../todolist.module.css"
+import s from "./TodolistTitle.module.css"
 import { EditableSpan } from "common/components"
-import { Button } from "common/components/Button/Button"
 import React from "react"
+import DeleteIcon from "@mui/icons-material/Delete"
+import IconButton from "@mui/material/IconButton"
 
 type Props = {
   todolist: DomainTodolist
 }
 export const TodolistTitle = ({ todolist }: Props) => {
-  const { id, title } = todolist
+  const { id, title, entityStatus } = todolist
 
   const dispatch = useAppDispatch()
 
@@ -28,11 +23,13 @@ export const TodolistTitle = ({ todolist }: Props) => {
   }
 
   return (
-    <div className={s.todolistTitleContainer}>
+    <div className={s.container}>
       <h3>
-        <EditableSpan value={title} onChange={updateTodolistHandler} />
+        <EditableSpan value={title} onChange={updateTodolistHandler} disabled={entityStatus === "loading"} />
       </h3>
-      <Button title={"x"} onClick={removeTodolistHandler} />
+      <IconButton onClick={removeTodolistHandler} disabled={entityStatus === "loading"}>
+        <DeleteIcon />
+      </IconButton>
     </div>
   )
 }

@@ -4,7 +4,8 @@ import { tasksApi } from "../api/tasksApi"
 import { Dispatch } from "redux"
 import { DomainTask, UpdateTaskDomainModel, UpdateTaskModel } from "../api/tasksApi.types"
 import { RootState } from "../../../app/store"
-import { setAppStatusAC } from "../../../app/app-reducer"
+import { setAppErrorAC, setAppStatusAC } from "../../../app/app-reducer"
+import { ResultCode } from "common/enums/enums"
 
 export type TasksStateType = {
   [key: string]: DomainTask[]
@@ -113,8 +114,17 @@ export const removeTaskTC = (arg: { taskId: string; todolistId: string }) => (di
 export const addTaskTC = (arg: { title: string; todolistId: string }) => (dispatch: Dispatch) => {
   dispatch(setAppStatusAC("loading"))
   tasksApi.createTask(arg).then((res) => {
-    dispatch(setAppStatusAC("succeeded"))
-    dispatch(addTaskAC({ task: res.data.data.item }))
+    if (res.data.resultCode === ResultCode.Success) {
+      dispatch(addTaskAC({ task: res.data.data.item }))
+      dispatch(setAppStatusAC("succeeded"))
+    } else {
+      if (res.data.messages.length) {
+        dispatch(setAppErrorAC(res.data.messages[0]))
+      } else {
+        dispatch(setAppErrorAC("Some error occurred"))
+      }
+      dispatch(setAppStatusAC("failed"))
+    }
   })
 }
 

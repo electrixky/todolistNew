@@ -6,6 +6,8 @@ import { removeTaskAC, removeTaskTC, updateTaskTC } from "../../../../../model/t
 import { EditableSpan } from "common/components"
 import { TaskStatus } from "common/enums/enums"
 import { DomainTask } from "../../../../../api/tasksApi.types"
+import DeleteIcon from "@mui/icons-material/Delete"
+import IconButton from "@mui/material/IconButton"
 
 type Props = {
   task: DomainTask
@@ -27,9 +29,13 @@ export const Task = ({ task, todolist }: Props) => {
     dispatch(updateTaskTC({ taskId: task.id, todolistId: todolist.id, domainModel: { title } }))
   }
 
+  const disabled = todolist.entityStatus === "loading"
+
   return (
     <li>
-      <Button title={"x"} onClick={removeTaskHandler} />
+      <IconButton onClick={removeTaskHandler} disabled={disabled}>
+        <DeleteIcon />
+      </IconButton>
       <input type="checkbox" onChange={changeTaskStatusHandler} checked={task.status === TaskStatus.Completed} />
       <EditableSpan value={task.title} onChange={changeTaskTitleHandler} />
     </li>

@@ -13,7 +13,7 @@ type Props = {
 
 export const Todolist = ({ todolist }: Props) => {
   const dispatch = useAppDispatch()
-
+  console.log()
   const addTaskCallback = (title: string) => {
     dispatch(addTaskTC({ title, todolistId: todolist.id }))
   }
@@ -21,7 +21,7 @@ export const Todolist = ({ todolist }: Props) => {
   return (
     <div>
       <TodolistTitle todolist={todolist} />
-      <AddItemForm addItem={addTaskCallback} />
+      <AddItemForm addItem={addTaskCallback} disabled={todolist.entityStatus === "loading"} />
       <Tasks todolist={todolist} />
       <FilterTasksButtons todolist={todolist} />
     </div>

@@ -3,11 +3,15 @@ import * as React from "react"
 import s from "../../../features/todolists/ui/Todolists/Todolist/todolist.module.css"
 import { Button } from "../Button/Button"
 import { ChangeEvent, KeyboardEvent, useState } from "react"
+import TextField from "@mui/material/TextField"
+import AddBoxIcon from "@mui/icons-material/AddBox"
+import IconButton from "@mui/material/IconButton"
 
 type Props = {
   addItem: (title: string) => void
+  disabled?: boolean
 }
-export const AddItemForm = ({ addItem }: Props) => {
+export const AddItemForm = ({ addItem, disabled }: Props) => {
   const [title, setTitle] = useState("")
   const [error, setError] = useState<string | null>(null)
 
@@ -34,13 +38,20 @@ export const AddItemForm = ({ addItem }: Props) => {
 
   return (
     <div>
-      <input
+      <TextField
+        label="Enter a title"
+        variant={"outlined"}
         value={title}
+        size={"small"}
+        error={!!error}
+        helperText={error}
         onChange={changeItemHandler}
         onKeyUp={addItemOnKeyUpHandler}
-        className={error ? s.error : ""}
+        disabled={disabled}
       />
-      <Button title={"+"} onClick={addItemHandler} />
+      <IconButton onClick={addItemHandler} color={"primary"} disabled={disabled}>
+        <AddBoxIcon />
+      </IconButton>
       {error && <span className={s.errorMessage}>Title is required.</span>}
     </div>
   )
