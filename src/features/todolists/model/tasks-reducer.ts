@@ -113,19 +113,25 @@ export const removeTaskTC = (arg: { taskId: string; todolistId: string }) => (di
 
 export const addTaskTC = (arg: { title: string; todolistId: string }) => (dispatch: Dispatch) => {
   dispatch(setAppStatusAC("loading"))
-  tasksApi.createTask(arg).then((res) => {
-    if (res.data.resultCode === ResultCode.Success) {
-      dispatch(addTaskAC({ task: res.data.data.item }))
-      dispatch(setAppStatusAC("succeeded"))
-    } else {
-      if (res.data.messages.length) {
-        dispatch(setAppErrorAC(res.data.messages[0]))
+  tasksApi
+    .createTask(arg)
+    .then((res) => {
+      if (res.data.resultCode === ResultCode.Success) {
+        dispatch(addTaskAC({ task: res.data.data.item }))
+        dispatch(setAppStatusAC("succeeded"))
       } else {
-        dispatch(setAppErrorAC("Some error occurred"))
+        if (res.data.messages.length) {
+          dispatch(setAppErrorAC(res.data.messages[0]))
+        } else {
+          dispatch(setAppErrorAC("Some error occurred"))
+        }
+        dispatch(setAppStatusAC("failed"))
       }
+    })
+    .catch((error) => {
+      dispatch(setAppErrorAC(error.message))
       dispatch(setAppStatusAC("failed"))
-    }
-  })
+    })
 }
 
 export const updateTaskTC =
@@ -148,9 +154,24 @@ export const updateTaskTC =
         ...domainModel,
       }
 
-      tasksApi.updateTask({ taskId, todolistId, model }).then((res) => {
-        dispatch(updateTaskAC(arg))
-      })
+      tasksApi
+        .updateTask({ taskId, todolistId, model })
+        .then((res) => {
+          if (res.data.resultCode === ResultCode.Success) {
+            dispatch(updateTaskAC(arg))
+          } else {
+            if (res.data.messages.length) {
+              dispatch(setAppErrorAC(res.data.messages[0]))
+            } else {
+              dispatch(setAppErrorAC("Some error occurred"))
+            }
+            dispatch(setAppStatusAC("failed"))
+          }
+        })
+        .catch((error) => {
+          dispatch(setAppErrorAC(error.message))
+          dispatch(setAppStatusAC("failed"))
+        })
     }
   }
 
