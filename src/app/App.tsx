@@ -4,6 +4,7 @@ import { Main } from "./Main"
 import { fetchTodolistsThunk } from "../features/todolists/model/todolists-reducer"
 import { useDispatch } from "react-redux"
 import { useAppDispatch } from "common/hooks/useAppDispatch"
+import { Outlet } from "react-router-dom"
 
 function App() {
   const dispatch = useAppDispatch()
@@ -16,6 +17,7 @@ function App() {
     <div className="App">
       <Header />
       <Main />
+      <Outlet />
       <ErrorSnackbar />
     </div>
   )
