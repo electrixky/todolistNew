@@ -9,6 +9,7 @@ import TextField from "@mui/material/TextField"
 import { SubmitHandler, useForm } from "react-hook-form"
 // import { getTheme } from 'common/theme'
 // import { selectThemeMode } from '../../../../app/appSelectors'
+import s from "./Login.module.css"
 
 type Inputs = {
   email: string
@@ -56,7 +57,18 @@ export const Login = () => {
           </FormLabel>
           <form onSubmit={handleSubmit(onSubmit)}>
             <FormGroup>
-              <TextField label="Email" margin="normal" {...register("email")} />
+              <TextField
+                label="Email"
+                margin="normal"
+                {...register("email", {
+                  required: "Email is required",
+                  pattern: {
+                    value: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+                    message: "Incorrect email address",
+                  },
+                })}
+              />
+              {errors.email && <span className={s.errorMessage}>{errors.email.message}</span>}
               <TextField type="password" label="Password" margin="normal" {...register("password")} />
               <FormControlLabel label={"Remember me"} control={<Checkbox {...register("rememberMe")} />} />
               <Button type={"submit"} variant={"contained"} color={"primary"}>
