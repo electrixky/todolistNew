@@ -53,7 +53,7 @@ export const Login = () => {
         <FormControl>
           <FormLabel>
             <p>
-              To login get registered
+              To login get registered{" "}
               <a
                 // style={{ color: theme.palette.primary.main, marginLeft: '5px' }}
                 href={"https://social-network.samuraijs.com/"}
@@ -85,7 +85,19 @@ export const Login = () => {
                 })}
               />
               {errors.email && <span className={s.errorMessage}>{errors.email.message}</span>}
-              <TextField type="password" label="Password" margin="normal" {...register("password")} />
+              <TextField
+                type="password"
+                label="Password"
+                margin="normal"
+                {...register("password", {
+                  required: "Password is required",
+                  minLength: {
+                    value: 3,
+                    message: "Password must be at least 3 characters long",
+                  },
+                })}
+              />
+              {errors.password && <span className={s.errorMessage}>{errors.password.message}</span>}
               <FormControlLabel
                 label={"Remember me"}
                 control={
