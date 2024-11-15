@@ -38,7 +38,7 @@ export const Header = (props: HeaderProps) => {
           <MenuIcon />
         </IconButton>
         <div>
-          {isLoggedIn && <MenuButton>Logout</MenuButton>}
+          {isLoggedIn && <MenuButton onClick={logoutHandler}>Logout</MenuButton>}
           <MenuButton background={theme.palette.primary.dark}>Faq</MenuButton>
           <Switch color={"default"} onChange={changeModeHandler} />
         </div>
