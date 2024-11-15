@@ -14,6 +14,8 @@ import React from "react"
 import { useAppSelector } from "common/hooks/useAppSelector"
 import { selectIsLoggedIn } from "../../model/authSelectors"
 import { Navigate } from "react-router-dom"
+import { loginTC } from "../../model/auth-reducer"
+import { useAppDispatch } from "common/hooks/useAppDispatch"
 
 type Inputs = {
   email: string
@@ -34,8 +36,10 @@ export const Login = () => {
     formState: { errors },
   } = useForm<Inputs>({ defaultValues: { email: "", password: "", rememberMe: false } })
 
+  const dispatch = useAppDispatch()
+
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    console.log(data)
+    dispatch(loginTC(data))
     reset()
   }
 
