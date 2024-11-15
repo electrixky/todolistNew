@@ -1,25 +1,42 @@
-import React, { useEffect } from "react"
+import CssBaseline from "@mui/material/CssBaseline"
+import { ThemeProvider } from "@mui/material/styles"
 import { ErrorSnackbar, Header } from "common/components"
-import { Main } from "./Main"
-import { fetchTodolistsThunk } from "../features/todolists/model/todolists-reducer"
-import { useDispatch } from "react-redux"
-import { useAppDispatch } from "common/hooks/useAppDispatch"
+import { getTheme } from "common/theme"
+import { useEffect } from "react"
 import { Outlet } from "react-router-dom"
+import { initializeAppTC } from "../features/auth/model/auth-reducer"
+import { selectIsInitialized } from "../features/auth/model/authSelectors"
+import { selectThemeMode } from "./appSelectors"
+import CircularProgress from "@mui/material/CircularProgress"
+import s from "./App.module.css"
+import { useAppSelector } from "common/hooks"
+import { useAppDispatch } from "common/hooks"
 
-function App() {
+export const App = () => {
+  const themeMode = useAppSelector(selectThemeMode)
+  const isInitialized = useAppSelector(selectIsInitialized)
+
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    dispatch(fetchTodolistsThunk)
+    dispatch(initializeAppTC())
   }, [])
 
   return (
-    <div className="App">
-      <Header />
-      <Outlet />
+    <ThemeProvider theme={getTheme(themeMode)}>
+      <CssBaseline />
+      {isInitialized && (
+        <>
+          <Header />
+          <Outlet />
+        </>
+      )}
+      {!isInitialized && (
+        <div className={s.circularProgressContainer}>
+          <CircularProgress size={150} thickness={3} />
+        </div>
+      )}
       <ErrorSnackbar />
-    </div>
+    </ThemeProvider>
   )
 }
-
-export default App
