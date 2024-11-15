@@ -76,6 +76,10 @@ export const setTodolistsAC = (todolists: Todolist[]) => {
   return { type: "SET-TODOLISTS", todolists } as const
 }
 
+export const clearTodolistsAC = () => {
+  return { type: "CLEAR-TODOLISTS" } as const
+}
+
 export const fetchTodolistsThunk = (dispatch: Dispatch) => {
   todolistsApi.getTodolists().then((res) => {
     dispatch(setTodolistsAC(res.data))
@@ -89,6 +93,7 @@ export type ChangeTodolistTitleActionType = ReturnType<typeof changeTodolistTitl
 export type ChangeTodolistFilterActionType = ReturnType<typeof changeTodolistFilterAC>
 export type ChangeTodolistEntityStatusType = ReturnType<typeof changeTodolistEntityStatusAC>
 export type SetTodolistsActionType = ReturnType<typeof setTodolistsAC>
+export type ClearTodolistsActionType = ReturnType<typeof clearTodolistsAC>
 
 export const fetchTodolistsTC = () => (dispatch: Dispatch) => {
   dispatch(setAppStatusAC("loading"))
@@ -163,3 +168,4 @@ export type TodolistActionsType =
   | ChangeTodolistFilterActionType
   | ChangeTodolistEntityStatusType
   | SetTodolistsActionType
+  | ClearTodolistsActionType

@@ -6,10 +6,14 @@ import FormGroup from "@mui/material/FormGroup"
 import FormLabel from "@mui/material/FormLabel"
 import Grid from "@mui/material/Grid"
 import TextField from "@mui/material/TextField"
-import { SubmitHandler, useForm } from "react-hook-form"
+import { Controller, SubmitHandler, useForm } from "react-hook-form"
 // import { getTheme } from 'common/theme'
 // import { selectThemeMode } from '../../../../app/appSelectors'
 import s from "./Login.module.css"
+import React from "react"
+import { useAppSelector } from "common/hooks/useAppSelector"
+import { selectIsLoggedIn } from "../../model/authSelectors"
+import { Navigate } from "react-router-dom"
 
 type Inputs = {
   email: string
@@ -20,6 +24,7 @@ type Inputs = {
 export const Login = () => {
   // const themeMode = useAppSelector(selectThemeMode)
   // const theme = getTheme(themeMode)
+  const isLoggedIn = useAppSelector(selectIsLoggedIn)
 
   const {
     register,
@@ -32,6 +37,10 @@ export const Login = () => {
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     console.log(data)
     reset()
+  }
+
+  if (isLoggedIn) {
+    return <Navigate to={"/"} />
   }
 
   return (
@@ -73,7 +82,16 @@ export const Login = () => {
               />
               {errors.email && <span className={s.errorMessage}>{errors.email.message}</span>}
               <TextField type="password" label="Password" margin="normal" {...register("password")} />
-              <FormControlLabel label={"Remember me"} control={<Checkbox {...register("rememberMe")} />} />
+              <FormControlLabel
+                label={"Remember me"}
+                control={
+                  <Controller
+                    name={"rememberMe"}
+                    control={control}
+                    render={({ field: { value, ...field } }) => <Checkbox {...field} checked={value} />}
+                  />
+                }
+              />
               <Button type={"submit"} variant={"contained"} color={"primary"}>
                 Login
               </Button>
