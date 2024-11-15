@@ -13,7 +13,7 @@ export const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
-    errorElement: <Page404 />,
+    // errorElement: <Page404 />,
     children: [
       {
         path: "/",
@@ -22,6 +22,10 @@ export const router = createBrowserRouter([
       {
         path: Path.Login,
         element: <Login />,
+      },
+      {
+        path: "*",
+        element: <Page404 />,
       },
     ],
   },
