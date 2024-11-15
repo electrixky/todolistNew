@@ -24,11 +24,14 @@ export const Login = () => {
   const {
     register,
     handleSubmit,
+    reset,
+    control,
     formState: { errors },
   } = useForm<Inputs>({ defaultValues: { email: "", password: "", rememberMe: false } })
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     console.log(data)
+    reset()
   }
 
   return (
